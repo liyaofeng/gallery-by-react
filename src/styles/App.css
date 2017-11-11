@@ -30,3 +30,25 @@ html, body {
 
   background: #ccc;
 }
+
+/*
+  Image.js
+*/
+.figure {
+  position: absolute;
+  width: 240px;
+  height: 300px;
+  background: #fff;
+  text-align: center;
+  padding: 40px;
+}
+
+.figureImg {
+  width: 240px;
+  height: 240px;
+}
+
+.figureTitle {
+  margin-top: 30px;
+  color: #999;
+}
