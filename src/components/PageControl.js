@@ -1,5 +1,5 @@
 require('normalize.css/normalize.css');
-require('styles/Image.css');
+require('styles/PageControl.css');
 
 import React from 'react';
 import ClassNames from 'classnames';
@@ -13,7 +13,7 @@ class Image extends React.Component {
     render() {
         console.log('render'); 
         return (
-            <div className="flip-container" style={this.props.position.style} onClick={this.props.value.isCenter ? nil : this.props.click(this.props.key)}>
+            <div className="flip-container" style={this.props.position.style} onClick={}>
                 <div className={ClassNames({"flipper": this.props.position.isCenter})}>
                     <div className="front">
                         <img className="figureImg"

@@ -33,14 +33,17 @@ class AppComponent extends React.Component {
                 let arr = [];
                 imageDatas.forEach(() => {
                     arr.push({
-                        center: {
-                            left: '100px',
-                            top: '100px',
-                            rotate: 0,
-                        }});
+                        style: {
+                            left: '500px',
+                            top: '250px',
+                            transform: 'rotate(0)deg)',
+                        },
+                        isCenter: false,
+                    });
                 });
                 return arr;
             })(),
+            centerIndex: 0,
         };
     }
 
@@ -51,8 +54,7 @@ class AppComponent extends React.Component {
         stageW = Math.ceil(stageDom.scrollWidth);
         stageH = Math.ceil(stageDom.scrollHeight);
 
-        this.setState({figureStyle: this.initPosition()});
-
+        this.setState({figureStyle: this.resetPosition()});
     }
 
     render() {
@@ -60,7 +62,7 @@ class AppComponent extends React.Component {
 
         var figureArr = [];
         imageDatas.forEach((img, index) => {
-            figureArr.push(<ImgFigure key={index} center={this.state.figureStyle[index].center} value={img} ref={"figure"+index} />);
+            figureArr.push(<ImgFigure key={index} position={this.state.figureStyle[index]} click={this.handleTouchImage} value={img} ref={"figure"+index} />);
         });
 
         return (
@@ -75,15 +77,21 @@ class AppComponent extends React.Component {
         );
     }
 
-    initPosition() {
-        console.log('initPosition');
+    handleTouchImage(index) {
+        this.setState({
+            centerIndex: index,
+            figureStyle: this.resetPosition(),
+        });
+    }
+
+    resetPosition() {
         let positionArr = [];
-        imageDatas.forEach((inageData, index, arr) => {
+        imageDatas.forEach((imageData, index, arr) => {
             var center = {};
-            if (index == 0) {
+            if (index == this.state.centerIndex) {
                 center = this.positionForType(2);
             }
-            else if (index == 1) {
+            else if (index == (this.state.centerIndex + 1) % arr.length) {
                 center = this.positionForType(3);
             }
             else if (index < arr.length / 2) {
@@ -93,7 +101,7 @@ class AppComponent extends React.Component {
                 center = this.positionForType(1);
             }
             console.log(center);
-            positionArr.push({center: center});
+            positionArr.push(center);
         });
         return positionArr;
     }
@@ -104,6 +112,7 @@ class AppComponent extends React.Component {
     positionForType(type) {
         console.log('positionForType');
         var left, top, rotate;
+        var isCenter = false;
         if (type == 0) {
             left = Math.ceil(Math.random() * (stageW / 2 - figureW) - figureW / 2);
             top = Math.ceil(Math.random() * stageH - figureH / 2);
@@ -123,15 +132,19 @@ class AppComponent extends React.Component {
 
         if (type == 2) {
             rotate = 0;
+            isCenter = true;
         }
         else {
             rotate = Math.ceil(Math.random() * 60 - 30)
         }
 
         return {
-            left: left + 'px',
-            top: top + 'px',
-            transform: 'rotate(' + rotate + 'deg)',
+            style: {
+                left: left + 'px',
+                top: top + 'px',
+                transform: 'rotate(' + rotate + 'deg)',
+            },
+            isCenter: isCenter,
         }
     }
 
