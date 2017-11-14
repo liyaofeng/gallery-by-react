@@ -3,6 +3,7 @@ require('styles/App.css');
 
 import React from 'react';
 import ImgFigure from './Image.js';
+import PageControl from './PageControl.js'
 
 
 var imageDatas = require('../data/imageDatas.json');
@@ -61,8 +62,10 @@ class AppComponent extends React.Component {
         console.log('render'); 
 
         var figureArr = [];
+        var pageArr = [];
         imageDatas.forEach((img, index) => {
-            figureArr.push(<ImgFigure key={index} position={this.state.figureStyle[index]} click={this.handleTouchImage} value={img} ref={"figure"+index} />);
+            figureArr.push(<ImgFigure key={index} index={index} position={this.state.figureStyle[index]} click={this.handleTouchImage.bind(this)} value={img} ref={"figure"+index} />);
+
         });
 
         return (
@@ -71,27 +74,31 @@ class AppComponent extends React.Component {
                     {figureArr}
                 </div>
                 <div className="pageControl">
-        			
+
                 </div>
             </div>
         );
     }
 
     handleTouchImage(index) {
-        this.setState({
-            centerIndex: index,
-            figureStyle: this.resetPosition(),
-        });
+        console.log("handleTouchImage" + index);
+        this.setState({centerIndex: index});
+        this.setState({figureStyle: this.resetPosition(index)});
     }
 
-    resetPosition() {
+    resetPosition(centerIndex) {
+        console.log('resetPosition' + centerIndex);
+        if (!centerIndex) {
+            centerIndex = this.state.centerIndex;
+        }
+        console.log('resetPosition' + centerIndex);
         let positionArr = [];
         imageDatas.forEach((imageData, index, arr) => {
             var center = {};
-            if (index == this.state.centerIndex) {
+            if (index == centerIndex) {
                 center = this.positionForType(2);
             }
-            else if (index == (this.state.centerIndex + 1) % arr.length) {
+            else if (index == (centerIndex + 1) % arr.length) {
                 center = this.positionForType(3);
             }
             else if (index < arr.length / 2) {

@@ -4,27 +4,21 @@ require('styles/PageControl.css');
 import React from 'react';
 import ClassNames from 'classnames';
 
-class Image extends React.Component {
+class PageControl extends React.Component {
     constructor(props) {
         console.log('constructor');
         super(props);
     }
 
     render() {
-        console.log('render'); 
         return (
-            <div className="flip-container" style={this.props.position.style} onClick={}>
-                <div className={ClassNames({"flipper": this.props.position.isCenter})}>
+            <div className="flip-container" >
+                <div className={ClassNames({"flipper": this.props.isSelected})}>
                     <div className="front">
-                        <img className="figureImg"
-                            src={this.props.value.imageURL}
-                            alt={this.props.value.desc}
-                        />
-                        <h2 className="figureTitle">{this.props.value.title}</h2>
+                        <h5>{this.props.index + 1}</h5>
                     </div>
                     <div className="back">
-                        <h2 className="figureTitle">{this.props.value.title}</h2>
-                        <p>{this.props.value.desc}</p>
+                        <h5>{this.props.index + 1}</h5>
                     </div>
                 </div>
             </div>
@@ -32,7 +26,7 @@ class Image extends React.Component {
     }
 }
 
-Image.defaultProps = {
+PageControl.defaultProps = {
 };
 
-export default Image;
+export default PageControl;

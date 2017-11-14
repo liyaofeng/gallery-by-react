@@ -8,12 +8,19 @@ class Image extends React.Component {
     constructor(props) {
         console.log('constructor');
         super(props);
+        
+    }
+
+    componentDidMount() {
+        console.log('image ' + this.props.index + ' componentDidMount');
+
+        this.setState({isCenter: this.props.position.isCenter});
     }
 
     render() {
         console.log('render'); 
         return (
-            <div className="flip-container" style={this.props.position.style} onClick={this.props.value.isCenter ? nil : this.props.click(this.props.key)}>
+            <div className="flip-container" style={this.props.position.style} onClick={this.props.position.isCenter ? null : this.click.bind(this)}>
                 <div className={ClassNames({"flipper": this.props.position.isCenter})}>
                     <div className="front">
                         <img className="figureImg"
@@ -29,6 +36,12 @@ class Image extends React.Component {
                 </div>
             </div>
         );
+    }
+
+    click() {
+        console.log('click' + this.props.index);
+
+        this.props.click(this.props.index);
     }
 }
 
