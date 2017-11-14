@@ -45,6 +45,7 @@ class AppComponent extends React.Component {
                 return arr;
             })(),
             centerIndex: 0,
+            pageControlLeft: {left: '0px'},
         };
     }
 
@@ -54,6 +55,10 @@ class AppComponent extends React.Component {
         let stageDom = this.refs.stage;
         stageW = Math.ceil(stageDom.scrollWidth);
         stageH = Math.ceil(stageDom.scrollHeight);
+
+        let pageControlDom = this.refs.pageControl;
+        let left = Math.ceil((stageDom.scrollWidth - pageControlDom.scrollWidth) / 2);
+        this.setState({pageControlLeft: {left: left + 'px'}})
 
         this.setState({figureStyle: this.resetPosition()});
     }
@@ -65,19 +70,23 @@ class AppComponent extends React.Component {
         var pageArr = [];
         imageDatas.forEach((img, index) => {
             figureArr.push(<ImgFigure key={index} index={index} position={this.state.figureStyle[index]} click={this.handleTouchImage.bind(this)} value={img} ref={"figure"+index} />);
-
+            pageArr.push(<PageControl key={index} index={index} isSelected={this.state.figureStyle[index].isCenter} click={this.handleTouchImage.bind(this)} />);
         });
 
         return (
-            <div className="stage" ref="stage">
+            <div className="stage" ref="stage" onKeyDown={this.handleKeyPress.bind(this)}>
                 <div className="imgContainer">
                     {figureArr}
                 </div>
-                <div className="pageControl">
-
+                <div className="pageControl" style={this.state.pageControlLeft} ref="pageControl">
+                    {pageArr}
                 </div>
             </div>
         );
+    }
+
+    handleKeyPress(key) {
+        console.log(key);
     }
 
     handleTouchImage(index) {

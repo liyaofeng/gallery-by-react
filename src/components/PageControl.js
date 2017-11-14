@@ -12,17 +12,18 @@ class PageControl extends React.Component {
 
     render() {
         return (
-            <div className="flip-container" >
-                <div className={ClassNames({"flipper": this.props.isSelected})}>
-                    <div className="front">
-                        <h5>{this.props.index + 1}</h5>
-                    </div>
-                    <div className="back">
-                        <h5>{this.props.index + 1}</h5>
-                    </div>
-                </div>
+            <div className="pc-flip-container" onClick={this.props.isSelected ? null : this.click.bind(this)} >
+                {(this.props.isSelected == false ? 
+                    <div className="pc-front"><span className="titleStyle">{this.props.index + 1}</span></div> : 
+                    <div className="pc-back"><span className="titleStyle">{this.props.index + 1}</span></div>)}
             </div>
         );
+    }
+
+    click() {
+        console.log('click' + this.props.index);
+
+        this.props.click(this.props.index);
     }
 }
 

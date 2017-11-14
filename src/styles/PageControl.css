@@ -1,48 +1,41 @@
 /* PageControl.js */
-.flip-container {
+.pc-flip-container {
   position: relative;
   width: 30px;
   height: 30px;
+  margin: 7px 4px;
 
   perspective: 380;
 
-  transition: 0.6s;
-  transform-style: flat;
-
-  display: inline-flex;
+  display: inline-block;
 }
-
-.flip-container:hover .flipper, .flip-container.hover .flipper {
-  transform: rotateY(180deg);
-}
-
-.flip-container, .front, .back {
+.pc-flip-container, .pc-front, .pc-back {
   text-align: center;
   cursor: pointer;
 }
 
-.flipper {
-  position: relative;
-
-  perspective: 0;
-
-  transition: 0.6s;
-  transform-style: preserve-3d;
-}
-
-.front, .back {
+.pc-front, .pc-back {
   position: absolute;
+  
+  margin: 3px;
+  width: 24px;
+  height: 24px;
+  border-radius: 12px;
 
   backface-visibility: hidden;
 }
 
-.front {
-  z-index: 2;
-  transform: rotateY(0deg);
-  background: 
+.pc-front {
+  background: #003366;
+  color: #ccc;
 }
 
-.back {
-  transform: rotateY(180deg);
+.pc-back {
+  background: #FF6633;
+  color: #fff;
+}
+
+.titleStyle {
+  font-size: 12px;
 }
 
