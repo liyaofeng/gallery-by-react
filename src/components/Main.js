@@ -74,7 +74,7 @@ class AppComponent extends React.Component {
         });
 
         return (
-            <div className="stage" ref="stage" onKeyDown={this.handleKeyPress.bind(this)}>
+            <div className="stage" ref="stage">
                 <div className="imgContainer">
                     {figureArr}
                 </div>
@@ -83,10 +83,6 @@ class AppComponent extends React.Component {
                 </div>
             </div>
         );
-    }
-
-    handleKeyPress(key) {
-        console.log(key);
     }
 
     handleTouchImage(index) {
